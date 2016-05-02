@@ -2,8 +2,8 @@
 
 let React = require('React');
 let ReactDOM = require('ReactDOM');
-let BootstrapMenu = require('bootstrap-menu');
 let jQuery = require('jquery');
+let Menu = require('runway-browser/lib/menu.js');
 let Tooltip = require('Tooltip');
 let Util = require('Util');
 let _ = require('lodash');
@@ -12,6 +12,7 @@ let View = function(controller, svg, module) {
 
 let model = module.env;
 let tooltip = new Tooltip(jQuery('#tooltip'));
+let menu = new Menu('elevators', controller, model);
 
 let numFloors = model.vars.get('floorControls').size();
 let numElevators = model.vars.get('elevators').size();
@@ -122,20 +123,6 @@ let elevatorDoors = (evar) => evar.lookup('location').match({
 let Elevator = React.createClass({
   mixins: [tooltip.Mixin],
 
-  componentDidMount: function() {
-    let id = this.props.elevatorId;
-    this.menu = ruleMenu(`#elevator-${id}`, [
-      ['move', id],
-      ['moveDoors', id],
-      ['changeDirection', id],
-      ['clearControl', id],
-    ]);
-  },
-
-  componentWillUnmount: function() {
-    this.menu.destroy();
-  },
-
   getVar: function() {
     let id = this.props.elevatorId;
     return model.getVar('elevators').index(id);
@@ -183,12 +170,27 @@ let Elevator = React.createClass({
       }
     });
 
+    let openMenu = event => menu.open([
+      {
+        rule: 'move',
+        args: id,
+      },
+      {
+        rule: 'moveDoors',
+        args: id,
+      },
+      {
+        rule: 'clearControl',
+        args: id,
+      },
+    ], event);
+
     return <g
       id={'elevator-' + id}
       className="clickable"
       onMouseOver={this.tooltipMouseOver}
       onMouseOut={this.tooltipMouseOut}
-      >
+      onClick={openMenu}>
       <rect
         style={{fill: doors, stroke: stroke}}
         x={bbox.x} y={bbox.y}
@@ -228,33 +230,8 @@ let FloorControl = React.createClass({
   },
 });
 
-let ruleMenu = (selector, rules) => new BootstrapMenu(selector, {
-  menuEvent: 'click',
-  actions: rules.map(rule => ({
-      name: rule[0],
-      onClick: () => controller.workspace.tryChangeState(() => {
-        console.log(rule);
-        let context = {};
-        model.getRule(rule[0]).fire(rule[1], context);
-      }),
-  })),
-});
-
 let Person = React.createClass({
   mixins: [tooltip.Mixin],
-
-  componentDidMount: function() {
-    let id = this.props.personId;
-    this.menu = ruleMenu(`#person-${id}`, [
-      ['wake', id],
-      ['boardOrLeave', id],
-      ['leave', id],
-    ]);
-  },
-
-  componentWillUnmount: function() {
-    this.menu.destroy();
-  },
 
   getVar: function() {
     let id = this.props.personId;
@@ -300,10 +277,22 @@ let Person = React.createClass({
       }
     });
 
+    let openMenu = event => menu.open([
+      {
+        rule: 'wake',
+        args: id,
+      },
+      {
+        rule: 'boardOrLeave',
+        args: id,
+      },
+    ], event);
+
     return <g id={'person-' + id}
       className='clickable'
       onMouseOver={this.tooltipMouseOver}
-      onMouseOut={this.tooltipMouseOut}>
+      onMouseOut={this.tooltipMouseOut}
+      onClick={openMenu}>
         <text x={bbox.x} y={bbox.y2} style={style}>{text}</text>
     </g>;
   },

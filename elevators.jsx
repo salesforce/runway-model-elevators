@@ -1,12 +1,14 @@
 "use strict";
 
-let React = require('React');
-let ReactDOM = require('ReactDOM');
+let React = require('deprecated!react');
+let ReactDOM = require('deprecated!react-dom');
 let jQuery = require('jquery');
-let Menu = require('runway-browser/lib/menu.js');
-let Tooltip = require('Tooltip');
-let Util = require('Util');
 let _ = require('lodash');
+
+let Graph = require('runway-browser/lib/stackedevents.js');
+let Menu = require('runway-browser/lib/menu.js');
+let Tooltip = require('runway-browser/lib/tooltip.js');
+let Util = require('runway-browser/lib/util.js');
 
 let View = function(controller, svg, module) {
 
@@ -372,7 +374,6 @@ let ElevatorView = React.createClass({
 
 let reactComponent = ReactDOM.render(<ElevatorView />, svg);
 
-let Graph = require('runway-browser/stackedevents.js');
 let graph = controller.mountTab(elem => new Graph(controller, elem, ['waiting', 'riding']), 'graph', 'Graph');
 window.graph = graph;
 

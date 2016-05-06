@@ -246,49 +246,6 @@ rule move for elevator in elevators {
   } // end match location
 } // end rule move
 
-/*
-// Elevator goes from up to down or down to up.
-rule changeDirection for elevator in elevators {
-  match elevator.location {
-    AtFloor(f) {
-      if f.doors == Closed && !isDestination(f.at, elevator) {
-        var smaller : Boolean = False;
-        var larger : Boolean = False;
-        for floor in elevator.destinations {
-          if floor < f.at {
-            smaller = True;
-          }
-          if floor > f.at {
-            larger = True;
-          }
-        }
-        for floor, control in floorControls {
-          if control.downActive {
-            if floor < f.at {
-              smaller = True;
-            }
-
-          }
-        }
-        match elevator.direction {
-          Up => {
-            if f.at > 1 && smaller && !larger {
-              elevator.direction = Down;
-            }
-          },
-          Down => {
-            if f.at < 6 && larger && !smaller {
-              elevator.direction = Up;
-            }
-          },
-        }
-      }
-    }
-    Between(b) { /* no turning here * /}
-  }
-}
-*/
-
 function dispatchElevator(floor: Floor, direction: Direction) {
   // measured in half-floors, should be >= (size(floorControls) - 1) * 3 * 2
   type Distance: 0..600;

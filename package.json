@@ -1,0 +1,14 @@
+{
+  "name": "runway-model-elevators",
+  "version": "0.1.0",
+  "description": "Elevator model for use in Runway",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SalesforceEng/runway-model-elevators.git"
+  },
+  "keywords": [
+    "runway"
+  ],
+  "author": "Diego Ongaro <dongaro@salesforce.com>",
+  "license": "MIT"
+}

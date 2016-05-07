@@ -10,5 +10,14 @@
     "runway"
   ],
   "author": "Diego Ongaro <dongaro@salesforce.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "models": {
+    "main": {
+      "name": "Elevators",
+      "spec": "elevators.model",
+      "view": "elevators.jsx",
+      "clock": "s",
+      "slowdown": 0.250
+    }
+  }
 }

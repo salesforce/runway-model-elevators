@@ -337,7 +337,7 @@ let ElevatorView = React.createClass({
   render: function() {
     let outerSVG = svg.parentElement;
     let box = outerSVG.viewBox.baseVal;
-    let layout = Layout(box.width, box.height * .7);
+    let layout = Layout(box.width, box.height);
     let destinations = [];
     model.vars.get('elevators').forEach((evar, eid) => {
       let floors = new Set();

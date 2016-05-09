@@ -106,7 +106,7 @@ let Layout = (width, height) => {
     return Util.fillBBox({
       x: people.x + w * (count - 1),
       y: people.y,
-      w: w,
+      w: w * 1.5,
       h: people.h,
     });
   };

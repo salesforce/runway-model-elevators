@@ -11,13 +11,14 @@
   ],
   "author": "Diego Ongaro <dongaro@salesforce.com>",
   "license": "MIT",
-  "models": {
-    "main": {
+  "models": [
+    {
+      "id": "elevators",
       "name": "Elevators",
       "spec": "elevators.model",
       "view": "elevators.jsx",
       "clock": "s",
       "slowdown": 0.250
     }
-  }
+  ]
 }
